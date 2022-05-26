@@ -1,11 +1,14 @@
 package main;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import entity.Player;
+import net.GameClient;
+import net.GameServer;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -31,6 +34,9 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandler keyH = new KeyHandler();
     public Player player = new Player(this, keyH);
 
+    private GameClient socketClient;
+    private GameServer socketServer;
+
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
@@ -38,12 +44,21 @@ public class GamePanel extends JPanel implements Runnable{
         this.StartGameThread();
         this.addKeyListener(keyH);
         this.setFocusable(true);
+        socketClient.sendData("ping".getBytes());;
         
     }
 
     public void StartGameThread(){
         gameThread = new Thread(this);
         gameThread.start();
+
+        if(JOptionPane.showConfirmDialog(this, "do you want to run the server") == 0){
+            socketServer = new GameServer(this);
+            socketServer.start();
+        }
+        
+        socketClient = new GameClient(this, "localhost");
+        socketClient.start();
 
     }
 
