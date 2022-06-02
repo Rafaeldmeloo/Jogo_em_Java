@@ -14,6 +14,7 @@ public class GameClient  extends Thread{
     private InetAddress ipAddress;
     private DatagramSocket socket;
     private GamePanel GP;
+    public static int count = 0;
 
     public GameClient(GamePanel GP, String ipAddress){
         this.GP = GP;
@@ -25,6 +26,7 @@ public class GameClient  extends Thread{
         } catch (UnknownHostException e){
             e.printStackTrace();
         }
+        count++;
     }
 
     public void run() {
@@ -43,7 +45,7 @@ public class GameClient  extends Thread{
     }
 
     public void sendData(byte[] data){
-        DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, 1331);
+        DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, 6666);
         try {
             socket.send(packet);
         } catch (IOException e) {

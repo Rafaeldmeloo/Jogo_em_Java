@@ -2,6 +2,9 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import net.GameClient;
+import net.GameServer;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -13,23 +16,27 @@ public class Player extends Entity{
     GamePanel GP;
     KeyHandler KH;
 
+    //private String username;
+
     public final int screenX;
     public final int screenY;
 
-    public Player(GamePanel GP, KeyHandler KH){
+    public Player(int x, int y, GamePanel GP, KeyHandler KH/*, String username*/){
         this.GP = GP;
         this.KH = KH;
+        //this.username = username;
+
 
         screenX = GP.screenWidth/2 - (GP.tileSize/2);
         screenY = GP.screenHeight/2 - (GP.tileSize/2);
 
-        setDefaultValues();
+        setDefaultValues(x, y);
         getPlayerImage();
     }
 
-    public void setDefaultValues(){
-        worldX      = GP.tileSize*23;
-        worldY      = GP.tileSize*21;
+    public void setDefaultValues(int x, int y){
+        worldX      = x;
+        worldY      = y;
         speed       = 3;
         direction   = "down";
     }
@@ -59,6 +66,14 @@ public class Player extends Entity{
             e.printStackTrace();
         }
 
+    }
+
+    public void locationToClient(){
+        if(GameServer.count == 2){
+            GP.socketServer.sendData((worldX + "," + worldY).getBytes(), GameServer.clientAddress, GameServer.clientPort); 
+        }else if(GameServer.count == 0 && GameClient.count == 1){
+            GP.socketClient.sendData((worldX + "," + worldY).getBytes());
+        }
     }
 
     public void update(){
@@ -95,7 +110,6 @@ public class Player extends Entity{
         }else{
             spriteNumb = 4;
         }
-
     }
 
     public void draw(Graphics2D G2){
@@ -145,6 +159,8 @@ public class Player extends Entity{
 
         }
         G2.drawImage(image, screenX, screenY, GP.tileSize, GP.tileSize, null);
+        // System.out.println("worldX : " + worldX );
+        // System.out.println("worldY : " + worldY );
 
     }
 

@@ -6,9 +6,13 @@ import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+
+import entity.Entity2;
 import entity.Player;
+import entity.PlayerMP;
 import net.GameClient;
 import net.GameServer;
+//import net.packets.Packet00Login;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -32,20 +36,30 @@ public class GamePanel extends JPanel implements Runnable{
     TileManager tileM = new TileManager(this);
     Thread gameThread;
     KeyHandler keyH = new KeyHandler();
-    public Player player = new Player(this, keyH);
+    public AssetSetter aSetter = new AssetSetter(this);
 
-    private GameClient socketClient;
-    private GameServer socketServer;
+    public Player player = new Player(tileSize*23, tileSize*21, this, keyH/*, JOptionPane.showInputDialog(this, "Please enter your username")*/);
+    public Entity2 player2[] = new Entity2[2];
+
+    public GameClient socketClient;
+    public GameServer socketServer;
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
+        this.setupGame();
         this.StartGameThread();
         this.addKeyListener(keyH);
         this.setFocusable(true);
-        socketClient.sendData("ping".getBytes());;
+        //Packet00Login loginPacket = new Packet00Login(JOptionPane.showInputDialog(this, "Please enter your username"));
+        //loginPacket.writeData(socketClient);
+        socketClient.sendData("ping".getBytes());
         
+    }
+
+    public void setupGame(){
+        aSetter.setPlayer2();
     }
 
     public void StartGameThread(){
@@ -57,7 +71,7 @@ public class GamePanel extends JPanel implements Runnable{
             socketServer.start();
         }
         
-        socketClient = new GameClient(this, "localhost");
+        socketClient = new GameClient(this, "192.168.1.2");
         socketClient.start();
 
     }
@@ -84,7 +98,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void update(){
         player.update();
-
+        player.locationToClient();
     }
 
     public void paintComponent(Graphics g){
@@ -92,6 +106,14 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D) g;
 
         tileM.draw(g2);
+
+        if(GameServer.count == 2){
+            player2[0].draw(g2, this);
+        } else if (GameServer.count == 0 && GameClient.count == 1){
+            player2[0].draw(g2, this);
+        }
+
+
         player.draw(g2);
 
         g2.dispose();
