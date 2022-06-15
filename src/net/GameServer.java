@@ -5,27 +5,18 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
 
-import entity.PlayerMP;
-import main.GamePanel;
-import main.KeyHandler;
 
 public class GameServer extends Thread{
     
     private DatagramSocket socket;
-    private GamePanel GP;
-    private KeyHandler KH;
     public static int count = 0;
     public static InetAddress clientAddress;
     public static int clientPort;
 
-    public static String xy = "1104 1008 ";
+    public static String XYDirection = "1104 1008 down ";
 
-    public GameServer(GamePanel GP){
-        this.GP = GP;
+    public GameServer(){
         try{
             this.socket = new DatagramSocket(6666);
         } catch (SocketException e){
@@ -45,7 +36,7 @@ public class GameServer extends Thread{
 
             String message = new String(packet.getData());
             if(!message.contains("ping")){
-                xy = message;
+                XYDirection = message;
             } else {
                 System.out.println("CLIENT > " + message);
             }

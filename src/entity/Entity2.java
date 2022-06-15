@@ -1,27 +1,17 @@
 package entity;
 
 import java.awt.image.BufferedImage;
-import java.awt.Graphics2D;
-
-import main.GamePanel;
-import net.GameClient;
 
 public class Entity2 {
     public int worldX, worldY;
     public int speed;
     public String direction;
-    public BufferedImage image;
+    
+    public BufferedImage standing_front, standing_back, standing_left, standing_right;
+    public BufferedImage walking_1_front, walking_1_back, walking_1_left, walking_1_right;
+    public BufferedImage walking_2_front, walking_2_back, walking_2_left, walking_2_right;
 
-        public void draw(Graphics2D g2, GamePanel gp, String xy){
-            
-                String[] position = xy.split(" ");
-                worldX = Integer.parseInt(position[0]);
-                worldY = Integer.parseInt(position[1]);
-
-                int screenX = worldX - gp.player.worldX + gp.player.screenX;
-                int screenY = worldY - gp.player.worldY + gp.player.screenY;
-
-            g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
-        }
+    public int spriteCounter    = 0;
+    public int spriteNumb       = 1;
     
 }

@@ -7,12 +7,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-import entity.Entity2;
 import entity.Player;
 import entity.PlayerMP;
 import net.GameClient;
 import net.GameServer;
-//import net.packets.Packet00Login;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -39,7 +37,7 @@ public class GamePanel extends JPanel implements Runnable{
     public AssetSetter aSetter = new AssetSetter(this);
 
     public Player player = new Player(tileSize*23, tileSize*21, this, keyH/*, JOptionPane.showInputDialog(this, "Please enter your username")*/);
-    public Entity2 player2[] = new Entity2[2];
+    public PlayerMP player2[] = new PlayerMP[2];
 
     public GameClient socketClient;
     public GameServer socketServer;
@@ -52,8 +50,6 @@ public class GamePanel extends JPanel implements Runnable{
         this.StartGameThread();
         this.addKeyListener(keyH);
         this.setFocusable(true);
-        //Packet00Login loginPacket = new Packet00Login(JOptionPane.showInputDialog(this, "Please enter your username"));
-        //loginPacket.writeData(socketClient);
         socketClient.sendData("ping".getBytes());
         
     }
@@ -67,11 +63,11 @@ public class GamePanel extends JPanel implements Runnable{
         gameThread.start();
 
         if(JOptionPane.showConfirmDialog(this, "do you want to run the server") == 0){
-            socketServer = new GameServer(this);
+            socketServer = new GameServer();
             socketServer.start();
         }
         
-        socketClient = new GameClient(this, "192.168.1.2");
+        socketClient = new GameClient("192.168.1.2");
         socketClient.start();
 
     }
@@ -108,9 +104,9 @@ public class GamePanel extends JPanel implements Runnable{
         tileM.draw(g2);
 
         if(GameServer.count == 2){
-            player2[0].draw(g2, this, GameServer.xy);
+            player2[0].draw(g2, this, GameServer.XYDirection);
         } else if (GameServer.count == 0 && GameClient.count == 1){
-            player2[0].draw(g2, this, GameClient.xy);
+            player2[0].draw(g2, this, GameClient.XYDirection);
         }
 
 

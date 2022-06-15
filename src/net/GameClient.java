@@ -7,19 +7,15 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-import main.GamePanel;
-
 public class GameClient  extends Thread{
     
     private InetAddress ipAddress;
     private DatagramSocket socket;
-    private GamePanel GP;
     public static int count = 0;
 
-    public static String xy = "1104 1008 ";
+    public static String XYDirection = "1104 1008 down ";
 
-    public GameClient(GamePanel GP, String ipAddress){
-        this.GP = GP;
+    public GameClient(String ipAddress){
         try{
             this.socket = new DatagramSocket();
             this.ipAddress = InetAddress.getByName(ipAddress);
@@ -42,7 +38,7 @@ public class GameClient  extends Thread{
             }
             String message = new String(packet.getData());
             if(!message.contains("pong")){
-                xy = message;
+                XYDirection = message;
             } else {
                 System.out.println("SERVER > " + message);
             }

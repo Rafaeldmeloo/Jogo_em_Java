@@ -8,7 +8,6 @@ import net.GameServer;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-//import java.awt.Color;
 import javax.imageio.ImageIO;
 
 public class Player extends Entity{
@@ -16,15 +15,14 @@ public class Player extends Entity{
     GamePanel GP;
     KeyHandler KH;
 
-    //private String username;
-
     public final int screenX;
     public final int screenY;
+    
+    public String packetDirection; 
 
-    public Player(int x, int y, GamePanel GP, KeyHandler KH/*, String username*/){
+    public Player(int x, int y, GamePanel GP, KeyHandler KH){
         this.GP = GP;
         this.KH = KH;
-        //this.username = username;
 
 
         screenX = GP.screenWidth/2 - (GP.tileSize/2);
@@ -70,9 +68,9 @@ public class Player extends Entity{
 
     public void locationToClient(){
         if(GameServer.count == 2){
-            GP.socketServer.sendData((worldX + " " + worldY + " ").getBytes(), GameServer.clientAddress, GameServer.clientPort); 
+            GP.socketServer.sendData((worldX + " " + worldY + " " + direction + " ").getBytes(), GameServer.clientAddress, GameServer.clientPort); 
         }else if(GameServer.count == 0 && GameClient.count == 1){
-            GP.socketClient.sendData((worldX + " " + worldY + " ").getBytes());
+            GP.socketClient.sendData((worldX + " " + worldY + " " + direction + " ").getBytes());
         }
     }
 
@@ -81,6 +79,7 @@ public class Player extends Entity{
             if(KH.upPressed){
                 worldY -= speed;
                 direction = "up";
+
             }
             else if(KH.downPressed){
                 worldY += speed;
@@ -159,12 +158,7 @@ public class Player extends Entity{
 
         }
         G2.drawImage(image, screenX, screenY, GP.tileSize, GP.tileSize, null);
-        // System.out.println("worldX : " + worldX );
-        // System.out.println("worldY : " + worldY );
 
     }
-
-
-
 
 }
