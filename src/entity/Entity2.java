@@ -12,9 +12,14 @@ public class Entity2 {
     public String direction;
     public BufferedImage image;
 
-        public void draw(Graphics2D g2, GamePanel gp){
-            int screenX = worldX - gp.player.worldX + gp.player.screenX;
-            int screenY = worldY - gp.player.worldY + gp.player.screenY;
+        public void draw(Graphics2D g2, GamePanel gp, String xy){
+            
+                String[] position = xy.split(" ");
+                worldX = Integer.parseInt(position[0]);
+                worldY = Integer.parseInt(position[1]);
+
+                int screenX = worldX - gp.player.worldX + gp.player.screenX;
+                int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
             g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
         }

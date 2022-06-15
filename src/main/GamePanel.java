@@ -108,9 +108,9 @@ public class GamePanel extends JPanel implements Runnable{
         tileM.draw(g2);
 
         if(GameServer.count == 2){
-            player2[0].draw(g2, this);
+            player2[0].draw(g2, this, GameServer.xy);
         } else if (GameServer.count == 0 && GameClient.count == 1){
-            player2[0].draw(g2, this);
+            player2[0].draw(g2, this, GameClient.xy);
         }
 
 

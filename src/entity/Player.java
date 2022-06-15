@@ -70,9 +70,9 @@ public class Player extends Entity{
 
     public void locationToClient(){
         if(GameServer.count == 2){
-            GP.socketServer.sendData((worldX + "," + worldY).getBytes(), GameServer.clientAddress, GameServer.clientPort); 
+            GP.socketServer.sendData((worldX + " " + worldY + " ").getBytes(), GameServer.clientAddress, GameServer.clientPort); 
         }else if(GameServer.count == 0 && GameClient.count == 1){
-            GP.socketClient.sendData((worldX + "," + worldY).getBytes());
+            GP.socketClient.sendData((worldX + " " + worldY + " ").getBytes());
         }
     }
 

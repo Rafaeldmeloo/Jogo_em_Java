@@ -16,6 +16,8 @@ public class GameClient  extends Thread{
     private GamePanel GP;
     public static int count = 0;
 
+    public static String xy = "1104 1008 ";
+
     public GameClient(GamePanel GP, String ipAddress){
         this.GP = GP;
         try{
@@ -39,8 +41,11 @@ public class GameClient  extends Thread{
                 e.printStackTrace();
             }
             String message = new String(packet.getData());
-            System.out.println("SERVER > " + message);
-
+            if(!message.contains("pong")){
+                xy = message;
+            } else {
+                System.out.println("SERVER > " + message);
+            }
         }
     }
 
