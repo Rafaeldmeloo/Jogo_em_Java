@@ -22,6 +22,7 @@ public class GameServer extends Thread{
         } catch (SocketException e){
             e.printStackTrace();
         }
+        count++;
     }
 
     public void run() {
@@ -40,10 +41,10 @@ public class GameServer extends Thread{
             } else {
                 System.out.println("CLIENT > " + message);
             }
-                if(message.trim().equalsIgnoreCase("ping") && count == 0) {
+                if(message.trim().equalsIgnoreCase("ping") && count == 1) {
                 sendData("pong".getBytes(), packet.getAddress(), packet.getPort());
                 count++;
-            }else if(message.trim().equalsIgnoreCase("ping") && count == 1){
+            }else if(message.trim().equalsIgnoreCase("ping") && count == 2){
                 sendData("pong".getBytes(), packet.getAddress(), packet.getPort());
                 clientAddress = packet.getAddress(); 
                 clientPort = packet.getPort(); 

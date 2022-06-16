@@ -67,8 +67,10 @@ public class GamePanel extends JPanel implements Runnable{
             socketServer.start();
         }
         
-        socketClient = new GameClient("192.168.1.2");
+        socketClient = new GameClient("localhost");
         socketClient.start();
+        player.getPlayerImage();
+        player2[0].getPlayerImage();
 
     }
 
@@ -103,7 +105,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         tileM.draw(g2);
 
-        if(GameServer.count == 2){
+        if(GameServer.count == 3){
             player2[0].draw(g2, this, GameServer.XYDirection);
         } else if (GameServer.count == 0 && GameClient.count == 1){
             player2[0].draw(g2, this, GameClient.XYDirection);

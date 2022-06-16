@@ -2,6 +2,9 @@ package entity;
 
 import java.net.InetAddress;
 
+import net.GameClient;
+import net.GameServer;
+
 import main.GamePanel;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -20,7 +23,7 @@ public class PlayerMP extends Entity2{
     public String direction;
 
     public PlayerMP(){
-        getPlayerImage();
+        //getPlayerImage();
     }
 
         public void draw(Graphics2D g2, GamePanel gp, String XYDirection){
@@ -90,28 +93,57 @@ public class PlayerMP extends Entity2{
 
         public void getPlayerImage(){
 
-            try{
+            if(GameServer.count == 0 && GameClient.count == 1){
+
+                try{
     
-                standing_front       = ImageIO.read(getClass().getResourceAsStream("/res/player/pixil-frame-parado-frente.png"));
-                walking_1_front    = ImageIO.read(getClass().getResourceAsStream("/res/player/pixil-frame-peEsquerdo-frente.png"));
-                walking_2_front    = ImageIO.read(getClass().getResourceAsStream("/res/player/pixil-frame-peDireito-frente.png"));
+                    standing_front       = ImageIO.read(getClass().getResourceAsStream("/res/player/gutts_standing_front.png"));
+                    walking_1_front    = ImageIO.read(getClass().getResourceAsStream("/res/player/gutts_leftFoot_front.png"));
+                    walking_2_front    = ImageIO.read(getClass().getResourceAsStream("/res/player/gutts_rightFoot_front.png"));
     
-                standing_back       = ImageIO.read(getClass().getResourceAsStream("/res/player/pixil-frame-parado-costas.png"));
-                walking_1_back    = ImageIO.read(getClass().getResourceAsStream("/res/player/pixil-frame-peEsquerdo-costas.png"));
-                walking_2_back    = ImageIO.read(getClass().getResourceAsStream("/res/player/pixil-frame-peDireito-costas.png"));
+                    standing_back       = ImageIO.read(getClass().getResourceAsStream("/res/player/gutts_standing_back.png"));
+                    walking_1_back    = ImageIO.read(getClass().getResourceAsStream("/res/player/gutts_leftFoot_back.png"));
+                    walking_2_back    = ImageIO.read(getClass().getResourceAsStream("/res/player/gutts_rightFoot_back.png"));
     
-                standing_left     = ImageIO.read(getClass().getResourceAsStream("/res/player/pixil-frame-parado-esquerda.png"));
-                walking_1_left  = ImageIO.read(getClass().getResourceAsStream("/res/player/pixil-frame-peEsquerdo-esquerda.png"));
-                walking_2_left  = ImageIO.read(getClass().getResourceAsStream("/res/player/pixil-frame-peDireito-esquerda.png"));
+                    standing_left     = ImageIO.read(getClass().getResourceAsStream("/res/player/gutts_standing_left.png"));
+                    walking_1_left  = ImageIO.read(getClass().getResourceAsStream("/res/player/gutts_leftFoot_left.png"));
+                    walking_2_left  = ImageIO.read(getClass().getResourceAsStream("/res/player/gutts_rightFoot_left.png"));
     
-                standing_right      = ImageIO.read(getClass().getResourceAsStream("/res/player/pixil-frame-parado-direita.png"));
-                walking_1_right   = ImageIO.read(getClass().getResourceAsStream("/res/player/pixil-frame-peEsquerdo-direita.png"));
-                walking_2_right   = ImageIO.read(getClass().getResourceAsStream("/res/player/pixil-frame-peDireito-direita.png"));
+                    standing_right      = ImageIO.read(getClass().getResourceAsStream("/res/player/gutts_standing_right.png"));
+                    walking_1_right   = ImageIO.read(getClass().getResourceAsStream("/res/player/gutts_leftFoot_right.png"));
+                    walking_2_right   = ImageIO.read(getClass().getResourceAsStream("/res/player/gutts_rightFoot_right.png"));
+
     
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
     
-            }catch(IOException e){
-                e.printStackTrace();
+            }else{
+    
+                try{
+
+                    standing_front       = ImageIO.read(getClass().getResourceAsStream("/res/player2/griffith_standing_front.png"));
+                    walking_1_front    = ImageIO.read(getClass().getResourceAsStream("/res/player2/griffith_leftFoot_front.png"));
+                    walking_2_front    = ImageIO.read(getClass().getResourceAsStream("/res/player2/griffith_rightFoot_front.png"));
+    
+                    standing_back       = ImageIO.read(getClass().getResourceAsStream("/res/player2/griffith_standing_back.png"));
+                    walking_1_back    = ImageIO.read(getClass().getResourceAsStream("/res/player2/griffith_leftFoot_back.png"));
+                    walking_2_back    = ImageIO.read(getClass().getResourceAsStream("/res/player2/griffith_rightFoot_back.png"));
+    
+                    standing_left     = ImageIO.read(getClass().getResourceAsStream("/res/player2/griffith_standing_left.png"));
+                    walking_1_left  = ImageIO.read(getClass().getResourceAsStream("/res/player2/griffith_leftFoot_left.png"));
+                    walking_2_left  = ImageIO.read(getClass().getResourceAsStream("/res/player2/griffith_rightFoot_left.png"));
+    
+                    standing_right      = ImageIO.read(getClass().getResourceAsStream("/res/player2/griffith_standing_right.png"));
+                    walking_1_right   = ImageIO.read(getClass().getResourceAsStream("/res/player2/griffith_leftFoot_right.png"));
+                    walking_2_right   = ImageIO.read(getClass().getResourceAsStream("/res/player2/griffith_rightFoot_right.png"));
+        
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+    
             }
+    
     
         }
 
