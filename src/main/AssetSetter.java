@@ -1,17 +1,28 @@
 package main;
 
-import entity.PlayerMP;
+import main.object.OBJ_GoldenKey;
+import main.object.OBJ_SilverKey;
+import main.object.OBJ_SkullKey;
 
 public class AssetSetter {
-    GamePanel GP;
+    GamePanel gp;
 
-    public AssetSetter(GamePanel GP){
-        this.GP = GP;
+    public AssetSetter(GamePanel gp){
+        this.gp = gp;
     }
 
-    public void setPlayer2(){
-        GP.player2[0] = new PlayerMP();
-        GP.player2[0].worldX = GP.tileSize*23;
-        GP.player2[0].worldY = GP.tileSize*21;
+    public void setObject(){
+        gp.obj[0] = new OBJ_GoldenKey();
+        gp.obj[0].worldX = 23 * gp.tileSize;
+        gp.obj[0].worldY = 7 * gp.tileSize;
+
+        gp.obj[1] = new OBJ_SilverKey();
+        gp.obj[1].worldX = 23 * gp.tileSize;
+        gp.obj[1].worldY = 40 * gp.tileSize;
+
+        gp.obj[2] = new OBJ_SkullKey();
+        gp.obj[2].worldX = 30 * gp.tileSize;
+        gp.obj[2].worldY = 21 * gp.tileSize;
+        
     }
 }

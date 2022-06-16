@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class PlayerMP extends Entity2{
+public class PlayerMP extends Entity{
 
     public InetAddress ipAddress;
     public int port;
@@ -22,8 +22,9 @@ public class PlayerMP extends Entity2{
     public int speed;
     public String direction;
 
-    public PlayerMP(){
-        //getPlayerImage();
+    public PlayerMP(GamePanel gp){
+        worldX = gp.tileSize*23;
+        worldY = gp.tileSize*21;
     }
 
         public void draw(Graphics2D g2, GamePanel gp, String XYDirection){

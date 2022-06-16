@@ -9,6 +9,7 @@ import java.awt.Graphics2D;
 
 import entity.Player;
 import entity.PlayerMP;
+import main.object.SuperObject;
 import net.GameClient;
 import net.GameServer;
 import tile.TileManager;
@@ -37,7 +38,8 @@ public class GamePanel extends JPanel implements Runnable{
     public AssetSetter aSetter = new AssetSetter(this);
 
     public Player player = new Player(tileSize*23, tileSize*21, this, keyH/*, JOptionPane.showInputDialog(this, "Please enter your username")*/);
-    public PlayerMP player2[] = new PlayerMP[2];
+    public PlayerMP player2 = new PlayerMP(this);
+    public SuperObject obj[] = new SuperObject[10];
 
     public GameClient socketClient;
     public GameServer socketServer;
@@ -55,7 +57,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void setupGame(){
-        aSetter.setPlayer2();
+        aSetter.setObject();
     }
 
     public void StartGameThread(){
@@ -70,7 +72,7 @@ public class GamePanel extends JPanel implements Runnable{
         socketClient = new GameClient("localhost");
         socketClient.start();
         player.getPlayerImage();
-        player2[0].getPlayerImage();
+        player2.getPlayerImage();
 
     }
 
@@ -105,12 +107,17 @@ public class GamePanel extends JPanel implements Runnable{
 
         tileM.draw(g2);
 
-        if(GameServer.count == 3){
-            player2[0].draw(g2, this, GameServer.XYDirection);
-        } else if (GameServer.count == 0 && GameClient.count == 1){
-            player2[0].draw(g2, this, GameClient.XYDirection);
+        for(int i = 0; i < obj.length; i++){
+            if(obj[i] != null){
+                obj[i].draw(g2, this);
+            }
         }
 
+        if(GameServer.count == 3){
+            player2.draw(g2, this, GameServer.XYDirection);
+        } else if (GameServer.count == 0 && GameClient.count == 1){
+            player2.draw(g2, this, GameClient.XYDirection);
+        }
 
         player.draw(g2);
 
