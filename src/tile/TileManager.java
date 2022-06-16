@@ -10,9 +10,9 @@ import java.io.InputStreamReader;
 
 public class TileManager {
     
-    GamePanel gp;
-    Tile[] tile;
-    int mapTileNum[][];
+    public GamePanel gp;
+    public Tile[] tile;
+    public int mapTileNum[][];
 
     public TileManager(GamePanel gp){
         this.gp = gp;
@@ -27,27 +27,37 @@ public class TileManager {
     public void getTileImage(){
 
         try{
-
+            //GRAMA
             tile[0] = new Tile();
             tile[0].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/grass.jpeg"));
 
+            //PAREDE
             tile[1] = new Tile();
             tile[1].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/wall.jpeg"));
+            tile[1].collision = true;
 
+            //ÁGUA
             tile[2] = new Tile();
             tile[2].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/water.jpeg"));
+            tile[2].collision = true;
 
+            //TERRA
             tile[3] = new Tile();
             tile[3].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/earth.jpeg"));
 
+            //ÁRVORE
             tile[4] = new Tile();
             tile[4].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/tree.jpeg"));
+            tile[4].collision = true;
 
+            //AREIA
             tile[5] = new Tile();
             tile[5].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/sand.jpeg"));
 
+            //ÁRVORE MORTA
             tile[6] = new Tile();
             tile[6].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/dead_tree.jpeg"));
+            tile[6].collision = true;
 
 
 

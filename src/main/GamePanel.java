@@ -41,6 +41,8 @@ public class GamePanel extends JPanel implements Runnable{
     public PlayerMP player2 = new PlayerMP(this);
     public SuperObject obj[] = new SuperObject[10];
 
+    public CollisionChecker cChecker = new CollisionChecker(this);
+
     public GameClient socketClient;
     public GameServer socketServer;
 
