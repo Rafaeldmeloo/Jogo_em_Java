@@ -16,6 +16,8 @@ public class Player extends Entity{
     GamePanel GP;
     KeyHandler KH;
 
+    public static boolean online = true;
+
     public final int screenX;
     public final int screenY;
     
@@ -96,9 +98,9 @@ public class Player extends Entity{
 
     public void locationToClient(){
         if(GameServer.count == 3){
-            GP.socketServer.sendData((worldX + " " + worldY + " " + direction + " ").getBytes(), GameServer.clientAddress, GameServer.clientPort); 
+            GP.socketServer.sendData((online + " " + worldX + " " + worldY + " " + direction + " ").getBytes(), GameServer.clientAddress, GameServer.clientPort); 
         }else if(GameServer.count == 0 && GameClient.count == 1){
-            GP.socketClient.sendData((worldX + " " + worldY + " " + direction + " ").getBytes());
+            GP.socketClient.sendData((online + " " + worldX + " " + worldY + " " + direction + " ").getBytes());
         }
     }
 

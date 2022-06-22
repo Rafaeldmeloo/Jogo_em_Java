@@ -14,7 +14,7 @@ public class GameServer extends Thread{
     public static InetAddress clientAddress;
     public static int clientPort;
 
-    public static String XYDirection = "1104 1008 down ";
+    public static String XYDirection = "true 1104 1008 down ";
 
     public GameServer(){
         try{
@@ -34,6 +34,9 @@ public class GameServer extends Thread{
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            clientAddress = packet.getAddress(); 
+            clientPort = packet.getPort();
 
             String message = new String(packet.getData());
             if(!message.contains("ping")){

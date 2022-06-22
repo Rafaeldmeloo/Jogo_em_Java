@@ -13,7 +13,7 @@ public class GameClient  extends Thread{
     private DatagramSocket socket;
     public static int count = 0;
 
-    public static String XYDirection = "1104 1008 down ";
+    public static String XYDirection = "false 1104 1008 down ";
 
     public GameClient(String ipAddress){
         try{
@@ -34,6 +34,7 @@ public class GameClient  extends Thread{
             try {
                 socket.receive(packet);
             } catch (IOException e) {
+
                 e.printStackTrace();
             }
             String message = new String(packet.getData());

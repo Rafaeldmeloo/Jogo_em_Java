@@ -1,5 +1,5 @@
 package main;
-
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.Dimension;
@@ -18,6 +18,8 @@ public class GamePanel extends JPanel implements Runnable{
 
     final int originalTileSize = 16;
     final int scale = 3;
+
+    private JFrame f;
     
     public final int tileSize = originalTileSize*scale;
     public final int maxScreenX = 16;
@@ -55,7 +57,8 @@ public class GamePanel extends JPanel implements Runnable{
         this.addKeyListener(keyH);
         this.setFocusable(true);
         socketClient.sendData("ping".getBytes());
-        
+        gameThread = new Thread(this);
+        gameThread.start();
     }
 
     public void setupGame(){
@@ -63,16 +66,23 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void StartGameThread(){
-        gameThread = new Thread(this);
-        gameThread.start();
+        
 
         if(JOptionPane.showConfirmDialog(this, "do you want to run the server") == 0){
+            
             socketServer = new GameServer();
             socketServer.start();
+            socketClient = new GameClient("localhost");
+            socketClient.start();
+            GameClient.XYDirection = "true 1104 1008 down ";
+
+        } else {
+
+            socketClient = new GameClient("localhost");
+            socketClient.start();
+
         }
         
-        socketClient = new GameClient("localhost");
-        socketClient.start();
         player.getPlayerImage();
         player2.getPlayerImage();
 
@@ -101,6 +111,11 @@ public class GamePanel extends JPanel implements Runnable{
     public void update(){
         player.update();
         player.locationToClient();
+        if(GameClient.XYDirection.contains("false")){
+            f = new JFrame();  
+            JOptionPane.showMessageDialog(f,"Please, a functional server must being working.");
+            System.exit(0);  
+        }
     }
 
     public void paintComponent(Graphics g){
@@ -114,11 +129,14 @@ public class GamePanel extends JPanel implements Runnable{
                 obj[i].draw(g2, this);
             }
         }
+        if(PlayerMP.online.contains("true")){
+            
+            if(GameServer.count == 3){
+                player2.draw(g2, this, GameServer.XYDirection);
+            } else if (GameServer.count == 0 && GameClient.count == 1){
+                player2.draw(g2, this, GameClient.XYDirection);
+            }
 
-        if(GameServer.count == 3){
-            player2.draw(g2, this, GameServer.XYDirection);
-        } else if (GameServer.count == 0 && GameClient.count == 1){
-            player2.draw(g2, this, GameClient.XYDirection);
         }
 
         player.draw(g2);
