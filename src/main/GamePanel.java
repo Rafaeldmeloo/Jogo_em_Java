@@ -71,12 +71,12 @@ public class GamePanel extends JPanel implements Runnable{
         if(JOptionPane.showConfirmDialog(this, "do you want to run the server") == 0){
             socketServer = new GameServer();
             socketServer.start();
-            socketClient = new GameClient("localhost");
+            socketClient = new GameClient("192.168.27.149");
             socketClient.start();
             GameClient.MPData = "true 1104 1008 down ";
 
         } else {
-            socketClient = new GameClient("localhost");
+            socketClient = new GameClient("192.168.27.149");
             socketClient.start();
         }
         
@@ -122,7 +122,7 @@ public class GamePanel extends JPanel implements Runnable{
         npc.draw(g2);
 
         for(int i = 0; i < obj.length; i++){
-            if(obj[i] != null && PlayerMP.objInteraction[i] == 0){
+            if(obj[i] != null && PlayerMP.objInteraction[i].contains("0")){
                 obj[i].draw(g2, this);
             }
         }

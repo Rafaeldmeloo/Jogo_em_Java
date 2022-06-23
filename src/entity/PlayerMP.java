@@ -19,7 +19,7 @@ public class PlayerMP extends Entity{
     public InetAddress ipAddress;
     public int port;
 
-    public static int[] objInteraction = {0, 0, 0, 0, 0, 0};
+    public static String[] objInteraction = {"0", "0", "0", "0", "0", "0"};
 
     public static String online = "true";
     public static int previousX = 1104; 
@@ -45,12 +45,12 @@ public class PlayerMP extends Entity{
         worldY = Integer.parseInt(data[2]);
         direction = data[3];
 
-        objInteraction[0] = Integer.parseInt(data[4]);
-        objInteraction[1] = Integer.parseInt(data[5]);
-        objInteraction[2] = Integer.parseInt(data[6]);
-        objInteraction[3] = Integer.parseInt(data[7]);
-        objInteraction[4] = Integer.parseInt(data[8]);
-        objInteraction[5] = Integer.parseInt(data[9]);
+        objInteraction[0] = data[4];
+        objInteraction[1] = data[5];
+        objInteraction[2] = data[6];
+        objInteraction[3] = data[7];
+        objInteraction[4] = data[8];
+        objInteraction[5] = data[9];
 
         if(online.contains("true")){
             int screenX = worldX - gp.player.worldX + gp.player.screenX;

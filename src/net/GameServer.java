@@ -14,7 +14,7 @@ public class GameServer extends Thread{
     public static InetAddress clientAddress;
     public static int clientPort;
 
-    public static String MPData = "true 1104 1008 down ";
+    public static String MPData = "true 1104 1008 down 0 0 0 0 0 0 ";
 
     public GameServer(){
         try{

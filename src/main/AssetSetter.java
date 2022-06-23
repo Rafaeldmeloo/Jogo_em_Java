@@ -10,7 +10,7 @@ import main.object.OBJ_SkullKey;
 //import main.object.OBJ_TorchRightPath;
 
 public class AssetSetter {
-    public static GamePanel gp;
+    public GamePanel gp;
 
     public AssetSetter(GamePanel gp){
         this.gp = gp;

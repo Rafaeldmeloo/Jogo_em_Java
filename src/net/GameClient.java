@@ -13,7 +13,7 @@ public class GameClient  extends Thread{
     private DatagramSocket socket;
     public static int count = 0;
 
-    public static String MPData = "false 1104 1008 down ";
+    public static String MPData = "false 1104 1008 down 0 0 0 0 0 0 ";
 
     public GameClient(String ipAddress){
         try{
