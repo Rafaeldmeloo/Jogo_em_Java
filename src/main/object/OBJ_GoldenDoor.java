@@ -10,11 +10,13 @@ public class OBJ_GoldenDoor extends SuperObject{
         name = "GoldenDoor";
 
         try{
-            image = ImageIO.read(getClass().getResourceAsStream("/res/objects/GoldenKey.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/res/objects/GoldenDoor.png"));
         }catch(IOException e){
             e.printStackTrace();
         }
+
+        collision = true;
     }
 
-
+    
 }

@@ -10,11 +10,11 @@ public class OBJ_SkullDoor extends SuperObject{
         name = "SkullDoor";
 
         try{
-            image = ImageIO.read(getClass().getResourceAsStream("/res/objects/SkullKey.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/res/objects/SkullDoor.png"));
         }catch(IOException e){
             e.printStackTrace();
         }
+
+        collision = true;
     }
-
-
 }

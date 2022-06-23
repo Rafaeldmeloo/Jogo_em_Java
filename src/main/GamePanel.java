@@ -66,10 +66,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void StartGameThread(){
-        
-
         if(JOptionPane.showConfirmDialog(this, "do you want to run the server") == 0){
-            
             socketServer = new GameServer();
             socketServer.start();
             socketClient = new GameClient("localhost");
@@ -77,15 +74,12 @@ public class GamePanel extends JPanel implements Runnable{
             GameClient.XYDirection = "true 1104 1008 down ";
 
         } else {
-
             socketClient = new GameClient("localhost");
             socketClient.start();
-
         }
         
         player.getPlayerImage();
         player2.getPlayerImage();
-
     }
 
     @Override
@@ -105,7 +99,6 @@ public class GamePanel extends JPanel implements Runnable{
                 delta--;
             }            
         }
-
     }
 
     public void update(){
@@ -130,20 +123,15 @@ public class GamePanel extends JPanel implements Runnable{
             }
         }
         if(PlayerMP.online.contains("true")){
-            
             if(GameServer.count == 3){
                 player2.draw(g2, this, GameServer.XYDirection);
             } else if (GameServer.count == 0 && GameClient.count == 1){
                 player2.draw(g2, this, GameClient.XYDirection);
             }
-
         }
 
         player.draw(g2);
 
         g2.dispose();
-
     }
-
-
 }

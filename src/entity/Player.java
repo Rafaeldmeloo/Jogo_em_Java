@@ -16,6 +16,8 @@ public class Player extends Entity{
     GamePanel GP;
     KeyHandler KH;
 
+    boolean[] hasKey = {false, false, false};
+
     public static boolean online = true;
 
     public final int screenX;
@@ -30,12 +32,13 @@ public class Player extends Entity{
         screenX = GP.screenWidth/2 - (GP.tileSize/2);
         screenY = GP.screenHeight/2 - (GP.tileSize/2);
 
-        solidArea        = new Rectangle();
-        solidArea.x      = 8;
-        solidArea.y      = 16;
-        solidArea.width  = 32;
-        solidArea.height = 32;
-
+        solidArea         = new Rectangle();
+        solidArea.x       = 8;
+        solidArea.y       = 16;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+        solidArea.width   = 32;
+        solidArea.height  = 32;
 
         setDefaultValues(x, y);
         //getPlayerImage();
@@ -124,6 +127,9 @@ public class Player extends Entity{
             collisionOn = false;
             GP.cChecker.checkTile(this);
 
+            int objIndex = GP.cChecker.checkObject(this, true);
+            pickUpObject(objIndex);
+
             if(collisionOn == false){
                 switch(direction){
                     case "up":
@@ -160,6 +166,46 @@ public class Player extends Entity{
             }
         }else{
             spriteNumb = 4;
+        }
+    }
+
+    public void pickUpObject(int i){
+        if(i != -1){
+            String objName = GP.obj[i].name;
+
+            //CHAVES
+            if(objName == "GoldenKey"){
+                hasKey[0] = true;
+                GP.obj[i] = null;
+            
+            }else if(objName == "SilverKey"){
+                hasKey[1] = true;
+                GP.obj[i] = null;
+            
+            }else if(objName == "SkullKey"){
+                hasKey[2] = true;
+                GP.obj[i] = null;
+            }
+
+            //PORTAS
+            else if(objName == "GoldenDoor"){
+                if(hasKey[0] == true){
+                    GP.obj[i] = null;
+                    hasKey[0] = false;
+                }
+            
+            }else if(objName == "SilverDoor"){
+                if(hasKey[1] == true){
+                    GP.obj[i] = null;
+                    hasKey[1] = false;
+                }
+            
+            }else if(objName == "SkullDoor"){
+                if(hasKey[2] == true){
+                    GP.obj[i] = null;
+                    hasKey[2] = false;
+                }
+            }
         }
     }
 

@@ -59,7 +59,15 @@ public class TileManager {
             tile[6].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/dead_tree.jpeg"));
             tile[6].collision = true;
 
+            //TOCHA ESQUERDA
+            tile[7] = new Tile();
+            tile[7].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/torchLeftPath.png"));
+            tile[7].collision = true;
 
+            //TOCHA DIREITA
+            tile[8] = new Tile();
+            tile[8].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/torchRightPath.png"));
+            tile[8].collision = true;
 
         }catch(IOException e){
             e.printStackTrace();
@@ -67,9 +75,7 @@ public class TileManager {
     }
 
     public void loadMap(String filePath){
-
         try{
-
             InputStream is = getClass().getResourceAsStream(filePath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
