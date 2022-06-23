@@ -16,7 +16,7 @@ public class Player extends Entity{
     GamePanel GP;
     KeyHandler KH;
 
-    boolean[] hasKey = {false, false, false};
+    public static int[] objInteraction = {0, 0, 0, 0, 0, 0};
 
     public static boolean online = true;
 
@@ -41,7 +41,6 @@ public class Player extends Entity{
         solidArea.height  = 32;
 
         setDefaultValues(x, y);
-        //getPlayerImage();
     }
 
     public void setDefaultValues(int x, int y){
@@ -99,11 +98,11 @@ public class Player extends Entity{
         }
     }
 
-    public void locationToClient(){
+    public void MPLocation(){
         if(GameServer.count == 3){
-            GP.socketServer.sendData((online + " " + worldX + " " + worldY + " " + direction + " ").getBytes(), GameServer.clientAddress, GameServer.clientPort); 
+            GP.socketServer.sendData((online + " " + worldX + " " + worldY + " " + direction + " " + objInteraction[0] + " " + objInteraction[1] + " " + objInteraction[2] + " " + objInteraction[3] + " " + objInteraction[4] + " " + objInteraction[5] + " ").getBytes(), GameServer.clientAddress, GameServer.clientPort); 
         }else if(GameServer.count == 0 && GameClient.count == 1){
-            GP.socketClient.sendData((online + " " + worldX + " " + worldY + " " + direction + " ").getBytes());
+            GP.socketClient.sendData((online + " " + worldX + " " + worldY + " " + direction + " " + objInteraction[0] + " " + objInteraction[1] + " " + objInteraction[2] + " " + objInteraction[3] + " " + objInteraction[4] + " " + objInteraction[5] + " ").getBytes());
         }
     }
 
@@ -175,35 +174,38 @@ public class Player extends Entity{
 
             //CHAVES
             if(objName == "GoldenKey"){
-                hasKey[0] = true;
+                objInteraction[0] = 1;
                 GP.obj[i] = null;
             
             }else if(objName == "SilverKey"){
-                hasKey[1] = true;
+                objInteraction[2] = 1;
                 GP.obj[i] = null;
             
             }else if(objName == "SkullKey"){
-                hasKey[2] = true;
+                objInteraction[4] = 1;
                 GP.obj[i] = null;
             }
 
             //PORTAS
             else if(objName == "GoldenDoor"){
-                if(hasKey[0] == true){
+                if(objInteraction[0] == 1){
                     GP.obj[i] = null;
-                    hasKey[0] = false;
+                    objInteraction[0] = 2;
+                    objInteraction[1] = 1;
                 }
             
             }else if(objName == "SilverDoor"){
-                if(hasKey[1] == true){
+                if(objInteraction[2] == 1){
                     GP.obj[i] = null;
-                    hasKey[1] = false;
+                    objInteraction[2] = 2;
+                    objInteraction[3] = 1;
                 }
             
             }else if(objName == "SkullDoor"){
-                if(hasKey[2] == true){
+                if(objInteraction[4] == 1){
                     GP.obj[i] = null;
-                    hasKey[2] = false;
+                    objInteraction[4] = 2;
+                    objInteraction[5] = 1;
                 }
             }
         }

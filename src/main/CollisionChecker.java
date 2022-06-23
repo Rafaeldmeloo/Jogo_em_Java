@@ -1,6 +1,7 @@
 package main;
 
 import entity.Entity;
+import entity.PlayerMP;
 
 public class CollisionChecker {
     GamePanel gp;
@@ -73,7 +74,7 @@ public class CollisionChecker {
         int index = -1;
         
         for(int i = 0; i < gp.obj.length; i++){
-            if(gp.obj[i] != null){
+            if(gp.obj[i] != null && PlayerMP.objInteraction[i] == 0){
                 //Posição da area solida da entidade
                 entity.solidArea.x = entity.worldX + entity.solidArea.x;
                 entity.solidArea.y = entity.worldY + entity.solidArea.y;

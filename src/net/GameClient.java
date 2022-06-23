@@ -13,7 +13,7 @@ public class GameClient  extends Thread{
     private DatagramSocket socket;
     public static int count = 0;
 
-    public static String XYDirection = "false 1104 1008 down ";
+    public static String MPData = "false 1104 1008 down ";
 
     public GameClient(String ipAddress){
         try{
@@ -39,7 +39,7 @@ public class GameClient  extends Thread{
             }
             String message = new String(packet.getData());
             if(!message.contains("pong")){
-                XYDirection = message;
+                MPData = message;
             } else {
                 System.out.println("SERVER > " + message);
             }

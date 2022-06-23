@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+import entity.Npc;
 import entity.Player;
 import entity.PlayerMP;
 import main.object.SuperObject;
@@ -41,6 +42,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     public Player player = new Player(tileSize*23, tileSize*21, this, keyH/*, JOptionPane.showInputDialog(this, "Please enter your username")*/);
     public PlayerMP player2 = new PlayerMP(this);
+    public Npc npc = new Npc(this);
     public SuperObject obj[] = new SuperObject[10];
 
     public CollisionChecker cChecker = new CollisionChecker(this);
@@ -71,7 +73,7 @@ public class GamePanel extends JPanel implements Runnable{
             socketServer.start();
             socketClient = new GameClient("localhost");
             socketClient.start();
-            GameClient.XYDirection = "true 1104 1008 down ";
+            GameClient.MPData = "true 1104 1008 down ";
 
         } else {
             socketClient = new GameClient("localhost");
@@ -103,8 +105,8 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void update(){
         player.update();
-        player.locationToClient();
-        if(GameClient.XYDirection.contains("false")){
+        player.MPLocation();
+        if(GameClient.MPData.contains("false")){
             f = new JFrame();  
             JOptionPane.showMessageDialog(f,"Please, a functional server must being working.");
             System.exit(0);  
@@ -117,16 +119,18 @@ public class GamePanel extends JPanel implements Runnable{
 
         tileM.draw(g2);
 
+        npc.draw(g2);
+
         for(int i = 0; i < obj.length; i++){
-            if(obj[i] != null){
+            if(obj[i] != null && PlayerMP.objInteraction[i] == 0){
                 obj[i].draw(g2, this);
             }
         }
         if(PlayerMP.online.contains("true")){
             if(GameServer.count == 3){
-                player2.draw(g2, this, GameServer.XYDirection);
+                player2.draw(g2, this, GameServer.MPData);
             } else if (GameServer.count == 0 && GameClient.count == 1){
-                player2.draw(g2, this, GameClient.XYDirection);
+                player2.draw(g2, this, GameClient.MPData);
             }
         }
 

@@ -7,33 +7,50 @@ import net.GameServer;
 
 import main.GamePanel;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class PlayerMP extends Entity{
 
+    GamePanel GP;
+
     public InetAddress ipAddress;
     public int port;
 
+    public static int[] objInteraction = {0, 0, 0, 0, 0, 0};
+
     public static String online = "true";
-    public int worldX, worldY;
     public static int previousX = 1104; 
     public static int previousY = 1008; 
-    public int speed;
-    public String direction;
 
     public PlayerMP(GamePanel gp){
         worldX = gp.tileSize*23;
         worldY = gp.tileSize*21;
+
+        solidArea         = new Rectangle();
+        solidArea.x       = 8;
+        solidArea.y       = 16;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+        solidArea.width   = 32;
+        solidArea.height  = 32;
     }
 
-    public void draw(Graphics2D g2, GamePanel gp, String XYDirection){
-        String[] position = XYDirection.split(" ");
-        online = position[0];
-        worldX = Integer.parseInt(position[1]);
-        worldY = Integer.parseInt(position[2]);
-        direction = position[3];
+    public void draw(Graphics2D g2, GamePanel gp, String MPData){
+        String[] data = MPData.split(" ");
+        online = data[0];
+        worldX = Integer.parseInt(data[1]);
+        worldY = Integer.parseInt(data[2]);
+        direction = data[3];
+
+        objInteraction[0] = Integer.parseInt(data[4]);
+        objInteraction[1] = Integer.parseInt(data[5]);
+        objInteraction[2] = Integer.parseInt(data[6]);
+        objInteraction[3] = Integer.parseInt(data[7]);
+        objInteraction[4] = Integer.parseInt(data[8]);
+        objInteraction[5] = Integer.parseInt(data[9]);
 
         if(online.contains("true")){
             int screenX = worldX - gp.player.worldX + gp.player.screenX;
@@ -148,6 +165,26 @@ public class PlayerMP extends Entity{
             direction = "right";
         }
 
+        if(collisionOn == false){
+            switch(direction){
+                case "up":
+                    worldY -= speed;
+                    break;
+
+                case "down":
+                    worldY += speed;
+                    break;
+
+                case "left":
+                    worldX -= speed;
+                    break;
+
+                case "right":
+                    worldX += speed;
+                    break;
+            }
+        }
+
         spriteCounter++;
         if(spriteCounter > 12){
             if(spriteNumb == 1)
@@ -162,4 +199,7 @@ public class PlayerMP extends Entity{
             spriteCounter = 0;
         }     
     }
+
 }
+
+
